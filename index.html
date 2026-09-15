@@ -281,7 +281,7 @@
     width: 9px; height: 9px; border-radius: 50%;
     background: var(--surface); border: 2px solid var(--line-strong);
   }
-  .scenario .tag{
+  .tag{
     display: block; font-size: 11px; font-weight: 700;
     letter-spacing: .08em; text-transform: uppercase;
     color: var(--accent-strong); margin-bottom: 4px;
@@ -295,6 +295,38 @@
     font-family: var(--font-display); font-weight: 700;
     color: var(--ink); font-size: 16px;
   }
+
+  /* ---- emotion cards (карта примеров) ---- */
+  .emotion-cards{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  @media (max-width: 860px){ .emotion-cards{ grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px){ .emotion-cards{ grid-template-columns: 1fr; } }
+
+  .emotion-card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 20px 20px 22px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .emotion-card h3{
+    font-size: 17px; color: var(--accent-strong);
+  }
+  .emotion-card .situation{
+    margin: 0; font-size: 14.5px; color: var(--ink-soft);
+  }
+  .emotion-card .first-thought{
+    margin: 0; font-size: 13.5px; font-style: italic; color: var(--ink-faint);
+  }
+  .emotion-card .finding{
+    padding-top: 10px; border-top: 1px solid var(--line);
+  }
+  .emotion-card .finding.second{ border-top-style: dashed; }
+  .emotion-card .finding p{ margin: 3px 0 0; font-size: 14px; color: var(--ink-soft); }
+  .emotion-card .finding strong{ color: var(--ink); font-weight: 700; }
 
   footer{
     border-top: 1px solid var(--line);
@@ -349,6 +381,7 @@
       <a href="#wheels" class="nav-link active">Колесо чувств</a>
       <a href="#howto" class="nav-link">Как искать внутри</a>
       <a href="#example" class="nav-link">Пример</a>
+      <a href="#map" class="nav-link">Карта примеров</a>
     </nav>
 
     <main class="content">
@@ -426,6 +459,95 @@
           </li>
         </ol>
       </section>
+
+      <section id="map" aria-label="Карта примеров">
+        <div class="section-head"><h2>Карта примеров</h2><span class="n">по одному чувству на карточку</span></div>
+        <div class="emotion-cards">
+          <article class="emotion-card">
+            <h3>Злость</h3>
+            <p class="situation">Коллега снова сорвал дедлайн, а разгребать теперь мне.</p>
+            <p class="first-thought">«Просто бешусь»</p>
+            <div class="finding">
+              <span class="tag">Точнее</span>
+              <p><strong>Возмущение</strong> — что мою работу не уважают.</p>
+            </div>
+            <div class="finding second">
+              <span class="tag">И ещё</span>
+              <p><strong>Тревога</strong> — переживаю, что теперь подумает начальник.</p>
+            </div>
+          </article>
+
+          <article class="emotion-card">
+            <h3>Грусть</h3>
+            <p class="situation">Переехала подруга, с которой виделись каждую неделю.</p>
+            <p class="first-thought">«Немного грустно»</p>
+            <div class="finding">
+              <span class="tag">Точнее</span>
+              <p><strong>Одиночество</strong> — пустота там, где было общение.</p>
+            </div>
+            <div class="finding second">
+              <span class="tag">И ещё</span>
+              <p><strong>Обеспокоенность</strong> — страх, что без регулярных встреч общение сойдёт на нет.</p>
+            </div>
+          </article>
+
+          <article class="emotion-card">
+            <h3>Страх</h3>
+            <p class="situation">Завтра разговор с начальником о зарплате.</p>
+            <p class="first-thought">«Боюсь»</p>
+            <div class="finding">
+              <span class="tag">Точнее</span>
+              <p><strong>Небезопасность</strong> — ощущение, что отказ что-то скажет обо мне.</p>
+            </div>
+            <div class="finding second">
+              <span class="tag">И ещё</span>
+              <p><strong>Возмущение</strong> — что вообще пришлось просить, а не предложили сами.</p>
+            </div>
+          </article>
+
+          <article class="emotion-card">
+            <h3>Удивление</h3>
+            <p class="situation">Друг, о котором давно ничего не было слышно, вдруг позвал встретиться.</p>
+            <p class="first-thought">«Ого, неожиданно»</p>
+            <div class="finding">
+              <span class="tag">Точнее</span>
+              <p><strong>Воодушевлённость</strong> — обрадовало, что про меня не забыли.</p>
+            </div>
+            <div class="finding second">
+              <span class="tag">И ещё</span>
+              <p><strong>Нервозность</strong> — и немного тревожно, почему именно сейчас.</p>
+            </div>
+          </article>
+
+          <article class="emotion-card">
+            <h3>Радость</h3>
+            <p class="situation">Закончила проект, над которым билась месяц.</p>
+            <p class="first-thought">«Наверное, рада»</p>
+            <div class="finding">
+              <span class="tag">Точнее</span>
+              <p><strong>Гордость</strong> — что не бросила на полпути.</p>
+            </div>
+            <div class="finding second">
+              <span class="tag">И ещё</span>
+              <p><strong>Опустошение</strong> — сил радоваться пока нет, будто выжата.</p>
+            </div>
+          </article>
+
+          <article class="emotion-card">
+            <h3>Любовь</h3>
+            <p class="situation">Партнёр молча приготовил чай, пока я допоздна работала.</p>
+            <p class="first-thought">«Приятно»</p>
+            <div class="finding">
+              <span class="tag">Точнее</span>
+              <p><strong>Забота</strong> — замеченная именно в мелочи.</p>
+            </div>
+            <div class="finding second">
+              <span class="tag">И ещё</span>
+              <p><strong>Вина</strong> — что сама в последнее время была раздражённой.</p>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
   </div>
 
@@ -478,7 +600,7 @@
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && !lightbox.hidden) closeLightbox(); });
 
   const navLinks = document.querySelectorAll('.nav-link');
-  const navSections = ['wheels', 'howto', 'example']
+  const navSections = ['wheels', 'howto', 'example', 'map']
     .map(id => document.getElementById(id))
     .filter(Boolean);
 
