@@ -212,24 +212,35 @@
   /* ---- howto ---- */
   .steps{
     list-style: none; margin: 0; padding: 0;
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+    display: flex; align-items: stretch; gap: 4px;
     counter-reset: step;
   }
-  @media (max-width: 780px){ .steps{ grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 460px){ .steps{ grid-template-columns: 1fr; } }
-  .steps li{
+  .steps .step{
     counter-increment: step;
-    border-top: 2px solid var(--accent);
-    padding-top: 12px;
+    flex: 1 1 0; min-width: 0;
   }
-  .steps li::before{
+  .steps .step::before{
     content: counter(step);
     font-family: var(--font-display); font-weight: 800;
     font-size: 22px; color: var(--accent-strong);
     display:block; margin-bottom: 4px;
   }
-  .steps li p{ margin: 0; font-size: 14.5px; color: var(--ink-soft); }
-  .steps li strong{ color: var(--ink); font-weight: 600; }
+  .steps .step p{ margin: 0; font-size: 14.5px; color: var(--ink-soft); }
+  .steps .step strong{ color: var(--ink); font-weight: 600; }
+  .steps .arrow{
+    flex: 0 0 auto; align-self: center;
+    display: flex; align-items: center; justify-content: center;
+    width: 24px;
+    color: var(--line-strong);
+    font-family: var(--font-display); font-weight: 700; font-size: 18px;
+  }
+  .steps .arrow::before{ content: '→'; }
+
+  @media (max-width: 700px){
+    .steps{ flex-direction: column; gap: 14px; }
+    .steps .arrow{ width: auto; }
+    .steps .arrow::before{ content: '↓'; }
+  }
 
   /* ---- scenario (mini-map example) ---- */
   .scenario{
@@ -308,7 +319,7 @@
   <div class="layout">
     <nav class="side-nav" aria-label="Разделы">
       <a href="#wheels" class="nav-link active">Колесо чувств</a>
-      <a href="#howto" class="nav-link">Как искать</a>
+      <a href="#howto" class="nav-link">Как искать внутри</a>
       <a href="#example" class="nav-link">Пример</a>
     </nav>
 
@@ -349,18 +360,21 @@
         </article>
       </section>
 
-      <section id="howto" aria-label="Как пользоваться">
-        <div class="section-head"><h2>Как искать</h2></div>
+      <section id="howto" aria-label="Как искать внутри">
+        <div class="section-head"><h2>Как искать внутри</h2></div>
         <ol class="steps">
-          <li><p><strong>Начните с тела.</strong> Что физически ощущается: сжатие, тепло, тяжесть, дрожь?</p></li>
-          <li><p><strong>Возьмите широкое слово.</strong> Похоже на злость, грусть, страх, радость, удивление или отвращение?</p></li>
-          <li><p><strong>Идите к краю кольца.</strong> Двигайтесь от центра наружу, пока слово не станет точным.</p></li>
-          <li><p><strong>Назовите вслух или запишите.</strong> Точное слово само по себе снижает накал.</p></li>
+          <li class="step"><p><strong>Начните с тела.</strong> Что физически ощущается: сжатие, тепло, тяжесть, дрожь?</p></li>
+          <li class="arrow" aria-hidden="true"></li>
+          <li class="step"><p><strong>Возьмите широкое слово.</strong> Похоже на злость, грусть, страх, радость, удивление или отвращение?</p></li>
+          <li class="arrow" aria-hidden="true"></li>
+          <li class="step"><p><strong>Идите к краю кольца.</strong> Двигайтесь от центра наружу, пока слово не станет точным.</p></li>
+          <li class="arrow" aria-hidden="true"></li>
+          <li class="step"><p><strong>Назовите вслух или запишите.</strong> Точное слово само по себе снижает накал.</p></li>
         </ol>
       </section>
 
       <section id="example" aria-label="Пример поиска">
-        <div class="section-head"><h2>Пример</h2><span class="n">как это выглядит на практике</span></div>
+        <div class="section-head"><h2>Пример</h2><span class="n">что делать в реальной жизни</span></div>
         <ol class="scenario">
           <li>
             <span class="tag">Ситуация</span>
