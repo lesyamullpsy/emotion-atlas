@@ -1,0 +1,366 @@
+<title>Атлас эмоций</title>
+<meta name="description" content="Два колеса эмоций для быстрого поиска точного слова — с пояснением, как ими пользоваться." />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,380;0,9..144,500;0,9..144,600;1,9..144,450&family=Manrope:wght@400;500;600;700&display=swap');
+
+  :root{
+    --bg: #EFEADD;
+    --surface: #FFFFFF;
+    --surface-2: #F7F3E8;
+    --ink: #2B2440;
+    --ink-soft: #5C5570;
+    --ink-faint: #8B84A0;
+    --accent: #A86B23;
+    --accent-strong: #8A551A;
+    --line: #DCD3BC;
+    --line-strong: #C9BC9C;
+    --shadow: 226 30% 20%;
+
+    --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+    --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #1C1830;
+      --surface: #262038;
+      --surface-2: #211C33;
+      --ink: #EFE8D8;
+      --ink-soft: #B7AECB;
+      --ink-faint: #837AA0;
+      --accent: #E0A94F;
+      --accent-strong: #F0BE6C;
+      --line: #3B3355;
+      --line-strong: #4B4269;
+      --shadow: 250 40% 3%;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #1C1830;
+    --surface: #262038;
+    --surface-2: #211C33;
+    --ink: #EFE8D8;
+    --ink-soft: #B7AECB;
+    --ink-faint: #837AA0;
+    --accent: #E0A94F;
+    --accent-strong: #F0BE6C;
+    --line: #3B3355;
+    --line-strong: #4B4269;
+    --shadow: 250 40% 3%;
+  }
+
+  *{ box-sizing: border-box; }
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    padding: clamp(28px, 6vw, 64px) 20px 48px;
+    line-height: 1.55;
+  }
+  .wrap{ max-width: 980px; margin: 0 auto; }
+
+  h1,h2,h3{ font-family: var(--font-display); font-weight: 600; text-wrap: balance; margin: 0; }
+
+  .kicker{
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    margin: 0 0 10px;
+  }
+  header.hero{
+    padding-bottom: clamp(28px, 5vw, 40px);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: clamp(32px, 6vw, 48px);
+  }
+  h1{ font-size: clamp(34px, 6vw, 52px); letter-spacing: -.01em; }
+  .sub{
+    margin: 16px 0 0;
+    max-width: 62ch;
+    font-size: 17px;
+    color: var(--ink-soft);
+  }
+  .sub em{ font-style: italic; color: var(--ink); }
+
+  section{ margin-bottom: clamp(40px, 7vw, 64px); }
+  .section-head{ display:flex; align-items:baseline; gap: 14px; margin-bottom: 20px; }
+  .section-head h2{ font-size: clamp(21px, 3vw, 26px); }
+  .section-head .n{
+    font-family: var(--font-display); font-style: italic;
+    color: var(--ink-faint); font-size: 15px;
+  }
+
+  /* ---- plates ---- */
+  .plates{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 720px){ .plates{ grid-template-columns: 1fr; } }
+
+  .plate{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .plate-frame{
+    position: relative;
+    background: #FCFAF3;
+    padding: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .plate-frame img{
+    display:block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    cursor: zoom-in;
+    border-radius: 2px;
+  }
+  .plate-frame::before{
+    content: attr(data-plate);
+    position: absolute;
+    top: 10px; left: 14px;
+    font-family: var(--font-display); font-style: italic;
+    font-size: 13px; color: var(--ink-faint);
+  }
+  .plate-open{
+    position: absolute; top: 10px; right: 12px;
+    font-family: var(--font-body); font-size: 11.5px; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase;
+    color: var(--accent-strong);
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 20px;
+    padding: 5px 11px;
+    cursor: pointer;
+  }
+  .plate-open:hover{ border-color: var(--accent); }
+  .plate-body{ padding: 20px 22px 22px; }
+  .plate-body h3{ font-size: 20px; margin-bottom: 6px; }
+  .plate-body .who{ font-size: 13px; color: var(--ink-faint); margin: 0 0 12px; }
+  .plate-body p{ margin: 0; color: var(--ink-soft); font-size: 15px; }
+  .rings{
+    display:flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;
+  }
+  .rings span{
+    font-size: 12px; color: var(--ink-soft);
+    border: 1px solid var(--line-strong);
+    border-radius: 20px; padding: 3px 10px;
+  }
+
+  /* ---- howto ---- */
+  .steps{
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+    counter-reset: step;
+  }
+  @media (max-width: 780px){ .steps{ grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 460px){ .steps{ grid-template-columns: 1fr; } }
+  .steps li{
+    counter-increment: step;
+    border-top: 2px solid var(--accent);
+    padding-top: 12px;
+  }
+  .steps li::before{
+    content: counter(step);
+    font-family: var(--font-display); font-style: italic;
+    font-size: 26px; color: var(--accent-strong);
+    display:block; margin-bottom: 4px;
+  }
+  .steps li p{ margin: 0; font-size: 14.5px; color: var(--ink-soft); }
+  .steps li strong{ color: var(--ink); font-weight: 600; }
+
+  /* ---- scenario (mini-map example) ---- */
+  .scenario{
+    list-style: none; margin: 0; padding: 0 0 0 24px;
+    border-left: 2px solid var(--line-strong);
+    display: flex; flex-direction: column; gap: 18px;
+    max-width: 58ch;
+  }
+  .scenario li{ position: relative; }
+  .scenario li::before{
+    content: ''; position: absolute; left: -31px; top: 5px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--surface); border: 2px solid var(--line-strong);
+  }
+  .scenario .tag{
+    display: block; font-size: 11px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: var(--accent-strong); margin-bottom: 4px;
+  }
+  .scenario p{ margin: 0; color: var(--ink-soft); font-size: 15px; }
+  .scenario li.answer::before{
+    background: var(--accent); border-color: var(--accent);
+    width: 11px; height: 11px; left: -32px;
+  }
+  .scenario li.answer p{
+    font-family: var(--font-display); font-style: italic;
+    color: var(--ink); font-size: 18px;
+  }
+
+  footer{
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+    font-size: 13px; color: var(--ink-faint);
+    display:flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  footer p{ margin: 0; max-width: 52ch; }
+
+  /* ---- lightbox ---- */
+  .lightbox{
+    position: fixed; inset: 0; background: hsl(var(--shadow) / .82);
+    display:flex; align-items:center; justify-content:center;
+    padding: 28px; z-index: 50;
+  }
+  .lightbox[hidden]{ display:none; }
+  .lightbox figure{ margin:0; max-width: min(92vw, 900px); max-height: 90vh; text-align:center; }
+  .lightbox img{ max-width: 100%; max-height: 78vh; border-radius: 4px; background:#FCFAF3; padding:14px; }
+  .lightbox figcaption{ color:#EFE8D8; font-size: 13px; margin-top: 12px; }
+  .lightbox-close{
+    position: absolute; top: 18px; right: 22px;
+    width: 38px; height: 38px; border-radius: 50%;
+    background: transparent; border: 1px solid rgba(239,232,216,.4);
+    color: #EFE8D8; font-size: 18px; line-height: 1; cursor: pointer;
+  }
+  .lightbox-close:hover{ background: rgba(239,232,216,.12); }
+
+  a{ color: var(--accent-strong); }
+  :focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: no-preference){
+    .plate-frame img{ transition: transform .2s ease; }
+    .plate-frame img:hover{ transform: scale(1.015); }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker">Шпаргалка · словарь чувств</p>
+    <h1>Атлас эмоций</h1>
+    <p class="sub">Два колеса, чтобы быстрее находить <em>точное</em> слово для того, что происходит внутри — своего или клиента. Нажмите на любое колесо, чтобы открыть его крупно.</p>
+  </header>
+
+  <section class="plates" aria-label="Колёса эмоций">
+    <article class="plate">
+      <div class="plate-frame" data-plate="Willcox, пер. Т. Шувалова">
+        <button class="plate-open" data-open="feeling">Открыть</button>
+        <img src="images/feeling-wheel.jpg" alt="Колесо чувств: шесть базовых чувств в центре, от которых расходятся два кольца более конкретных оттенков" data-open="feeling" />
+      </div>
+      <div class="plate-body">
+        <h3>Колесо чувств</h3>
+        <p class="who">Junto Institute, по методу Глории Уилкокс</p>
+        <p>Шесть базовых чувств в центре — точка входа. От каждого расходятся два кольца ко всё более конкретным оттенкам: от «грусть» через «опустошённость» к «беспомощности».</p>
+        <div class="rings">
+          <span>центр — базовое чувство</span>
+          <span>2 кольцо — оттенок</span>
+          <span>3 кольцо — конкретика</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="plate">
+      <div class="plate-frame" data-plate="Плутчик, 1980">
+        <button class="plate-open" data-open="plutchik">Открыть</button>
+        <img src="images/plutchik.webp" alt="Колесо эмоций Плутчика: восемь базовых эмоций-лепестков с тремя уровнями интенсивности каждая" data-open="plutchik" />
+      </div>
+      <div class="plate-body">
+        <h3>Колесо Плутчика</h3>
+        <p class="who">психолог Роберт Плутчик</p>
+        <p>Восемь базовых эмоций растут попарно противоположными лепестками: радость ↔ грусть, доверие ↔ отвращение, страх ↔ гнев, удивление ↔ ожидание. Между лепестками — эмоции-сплавы: гордость, любовь, разочарование.</p>
+        <div class="rings">
+          <span>центр — сильнее</span>
+          <span>край — слабее</span>
+          <span>между лепестков — сплавы</span>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section aria-label="Как пользоваться">
+    <div class="section-head"><h2>Как искать</h2></div>
+    <ol class="steps">
+      <li><p><strong>Начните с тела.</strong> Что физически ощущается: сжатие, тепло, тяжесть, дрожь?</p></li>
+      <li><p><strong>Возьмите широкое слово.</strong> Похоже на злость, грусть, страх, радость, удивление или отвращение?</p></li>
+      <li><p><strong>Идите к краю кольца.</strong> Двигайтесь от центра наружу, пока слово не станет точным.</p></li>
+      <li><p><strong>Назовите вслух или запишите.</strong> Точное слово само по себе снижает накал.</p></li>
+    </ol>
+  </section>
+
+  <section aria-label="Пример поиска">
+    <div class="section-head"><h2>Пример</h2><span class="n">как это выглядит на практике</span></div>
+    <ol class="scenario">
+      <li>
+        <span class="tag">Ситуация</span>
+        <p>Поссорился с другом, до сих пор трясёт.</p>
+      </li>
+      <li>
+        <span class="tag">Первая мысль</span>
+        <p>«Чувствую... злость?»</p>
+      </li>
+      <li>
+        <span class="tag">Иду по ветке «Злость»</span>
+        <p>Рядом — раздражение, возмущение, ревность. Похоже, но что-то не сходится.</p>
+      </li>
+      <li>
+        <span class="tag">Проверяю соседнюю ветку</span>
+        <p>Гнев часто прикрывает более уязвимое чувство. Заглядываю в «Грусть» → «Страдание».</p>
+      </li>
+      <li class="answer">
+        <span class="tag">Точное слово</span>
+        <p>Не злость. Обида — что меня не услышали.</p>
+      </li>
+    </ol>
+  </section>
+
+  <footer>
+    <p>Колесо чувств — русский перевод Тани Шуваловой, Junto Institute for Entrepreneurial Leadership. Эмоция — сигнал, а не диагноз.</p>
+    <p>Личный справочник</p>
+  </footer>
+
+</div>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть">✕</button>
+  <figure>
+    <img id="lightboxImg" src="" alt="" />
+    <figcaption id="lightboxCaption"></figcaption>
+  </figure>
+</div>
+
+<script>
+  const data = {
+    plutchik: { src: 'images/plutchik.webp', caption: 'Колесо эмоций Плутчика' },
+    feeling: { src: 'images/feeling-wheel.jpg', caption: 'Колесо чувств — Junto Institute, пер. Т. Шувалова' }
+  };
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+
+  function openLightbox(key){
+    const item = data[key];
+    if(!item) return;
+    lightboxImg.src = item.src;
+    lightboxImg.alt = item.caption;
+    lightboxCaption.textContent = item.caption;
+    lightbox.hidden = false;
+  }
+  function closeLightbox(){
+    lightbox.hidden = true;
+    lightboxImg.src = '';
+  }
+
+  document.querySelectorAll('[data-open]').forEach(el => {
+    el.addEventListener('click', () => openLightbox(el.dataset.open));
+  });
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && !lightbox.hidden) closeLightbox(); });
+</script>
