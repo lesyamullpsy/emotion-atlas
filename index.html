@@ -20,6 +20,7 @@
     --accent-strong: #2A5170;
     --line: #D6DFE7;
     --line-strong: #B4C6D4;
+    --quote-bg: #E9F2FA;
     --shadow: 226 30% 20%;
 
     --font-display: 'Unbounded', 'Segoe UI', sans-serif;
@@ -39,6 +40,7 @@
       --accent-strong: #8FC3EA;
       --line: #3B3355;
       --line-strong: #4B4269;
+      --quote-bg: #24304A;
       --shadow: 250 40% 3%;
     }
   }
@@ -54,6 +56,7 @@
     --accent-strong: #8FC3EA;
     --line: #3B3355;
     --line-strong: #4B4269;
+    --quote-bg: #24304A;
     --shadow: 250 40% 3%;
   }
 
@@ -81,8 +84,8 @@
     margin: 0 0 clamp(32px, 5vw, 48px);
     padding: clamp(26px, 5vw, 38px) 20px;
     text-align: center;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    background: var(--quote-bg);
+    border-radius: 6px;
   }
   .quote blockquote{
     margin: 0 auto; max-width: 42ch;
