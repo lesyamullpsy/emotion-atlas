@@ -309,14 +309,32 @@
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 4px;
-    padding: 20px 20px 22px;
-    display: flex; flex-direction: column; gap: 12px;
   }
+  .emotion-card summary{
+    list-style: none; cursor: pointer;
+    padding: 20px 40px 18px 20px;
+    display: flex; flex-direction: column; gap: 8px;
+    position: relative;
+  }
+  .emotion-card summary::-webkit-details-marker{ display: none; }
+  .emotion-card summary::marker{ content: ''; }
+  .emotion-card summary::after{
+    content: '⌄';
+    position: absolute; top: 18px; right: 18px;
+    font-family: var(--font-display); font-weight: 700; font-size: 18px;
+    color: var(--accent-strong);
+  }
+  .emotion-card[open] summary::after{ transform: rotate(180deg); }
+  .emotion-card summary:hover h3{ color: var(--accent); }
   .emotion-card h3{
     font-size: 17px; color: var(--accent-strong);
   }
   .emotion-card .situation{
     margin: 0; font-size: 14.5px; color: var(--ink-soft);
+  }
+  .emotion-card .card-body{
+    padding: 0 20px 20px;
+    display: flex; flex-direction: column; gap: 12px;
   }
   .emotion-card .first-thought{
     margin: 0; font-size: 13.5px; font-style: italic; color: var(--ink-faint);
@@ -361,6 +379,7 @@
     html{ scroll-behavior: smooth; }
     .plate-frame img{ transition: transform .2s ease; }
     .plate-frame img:hover{ transform: scale(1.015); }
+    .emotion-card summary::after{ transition: transform .2s ease; }
   }
 </style>
 </head>
@@ -463,89 +482,113 @@
       <section id="map" aria-label="Карта примеров">
         <div class="section-head"><h2>Карта примеров</h2><span class="n">по одному чувству на карточку</span></div>
         <div class="emotion-cards">
-          <article class="emotion-card">
-            <h3>Злость</h3>
-            <p class="situation">Коллега снова сорвал дедлайн, а разгребать теперь мне.</p>
-            <p class="first-thought">«Просто бешусь»</p>
-            <div class="finding">
-              <span class="tag">Точнее</span>
-              <p><strong>Возмущение</strong> — что мою работу не уважают.</p>
+          <details class="emotion-card">
+            <summary>
+              <h3>Злость</h3>
+              <p class="situation">Коллега снова сорвал дедлайн, а разгребать теперь мне.</p>
+            </summary>
+            <div class="card-body">
+              <p class="first-thought">«Просто бешусь»</p>
+              <div class="finding">
+                <span class="tag">Точнее</span>
+                <p><strong>Возмущение</strong> — что мою работу не уважают.</p>
+              </div>
+              <div class="finding second">
+                <span class="tag">И ещё</span>
+                <p><strong>Тревога</strong> — переживаю, что теперь подумает начальник.</p>
+              </div>
             </div>
-            <div class="finding second">
-              <span class="tag">И ещё</span>
-              <p><strong>Тревога</strong> — переживаю, что теперь подумает начальник.</p>
-            </div>
-          </article>
+          </details>
 
-          <article class="emotion-card">
-            <h3>Грусть</h3>
-            <p class="situation">Переехала подруга, с которой виделись каждую неделю.</p>
-            <p class="first-thought">«Немного грустно»</p>
-            <div class="finding">
-              <span class="tag">Точнее</span>
-              <p><strong>Одиночество</strong> — пустота там, где было общение.</p>
+          <details class="emotion-card">
+            <summary>
+              <h3>Грусть</h3>
+              <p class="situation">Переехала подруга, с которой виделись каждую неделю.</p>
+            </summary>
+            <div class="card-body">
+              <p class="first-thought">«Немного грустно»</p>
+              <div class="finding">
+                <span class="tag">Точнее</span>
+                <p><strong>Одиночество</strong> — пустота там, где было общение.</p>
+              </div>
+              <div class="finding second">
+                <span class="tag">И ещё</span>
+                <p><strong>Обеспокоенность</strong> — страх, что без регулярных встреч общение сойдёт на нет.</p>
+              </div>
             </div>
-            <div class="finding second">
-              <span class="tag">И ещё</span>
-              <p><strong>Обеспокоенность</strong> — страх, что без регулярных встреч общение сойдёт на нет.</p>
-            </div>
-          </article>
+          </details>
 
-          <article class="emotion-card">
-            <h3>Страх</h3>
-            <p class="situation">Завтра разговор с начальником о зарплате.</p>
-            <p class="first-thought">«Боюсь»</p>
-            <div class="finding">
-              <span class="tag">Точнее</span>
-              <p><strong>Небезопасность</strong> — ощущение, что отказ что-то скажет обо мне.</p>
+          <details class="emotion-card">
+            <summary>
+              <h3>Страх</h3>
+              <p class="situation">Завтра разговор с начальником о зарплате.</p>
+            </summary>
+            <div class="card-body">
+              <p class="first-thought">«Боюсь»</p>
+              <div class="finding">
+                <span class="tag">Точнее</span>
+                <p><strong>Небезопасность</strong> — ощущение, что отказ что-то скажет обо мне.</p>
+              </div>
+              <div class="finding second">
+                <span class="tag">И ещё</span>
+                <p><strong>Возмущение</strong> — что вообще пришлось просить, а не предложили сами.</p>
+              </div>
             </div>
-            <div class="finding second">
-              <span class="tag">И ещё</span>
-              <p><strong>Возмущение</strong> — что вообще пришлось просить, а не предложили сами.</p>
-            </div>
-          </article>
+          </details>
 
-          <article class="emotion-card">
-            <h3>Удивление</h3>
-            <p class="situation">Друг, о котором давно ничего не было слышно, вдруг позвал встретиться.</p>
-            <p class="first-thought">«Ого, неожиданно»</p>
-            <div class="finding">
-              <span class="tag">Точнее</span>
-              <p><strong>Воодушевлённость</strong> — обрадовало, что про меня не забыли.</p>
+          <details class="emotion-card">
+            <summary>
+              <h3>Удивление</h3>
+              <p class="situation">Друг, о котором давно ничего не было слышно, вдруг позвал встретиться.</p>
+            </summary>
+            <div class="card-body">
+              <p class="first-thought">«Ого, неожиданно»</p>
+              <div class="finding">
+                <span class="tag">Точнее</span>
+                <p><strong>Воодушевлённость</strong> — обрадовало, что про меня не забыли.</p>
+              </div>
+              <div class="finding second">
+                <span class="tag">И ещё</span>
+                <p><strong>Нервозность</strong> — и немного тревожно, почему именно сейчас.</p>
+              </div>
             </div>
-            <div class="finding second">
-              <span class="tag">И ещё</span>
-              <p><strong>Нервозность</strong> — и немного тревожно, почему именно сейчас.</p>
-            </div>
-          </article>
+          </details>
 
-          <article class="emotion-card">
-            <h3>Радость</h3>
-            <p class="situation">Закончила проект, над которым билась месяц.</p>
-            <p class="first-thought">«Наверное, рада»</p>
-            <div class="finding">
-              <span class="tag">Точнее</span>
-              <p><strong>Гордость</strong> — что не бросила на полпути.</p>
+          <details class="emotion-card">
+            <summary>
+              <h3>Радость</h3>
+              <p class="situation">Закончила проект, над которым билась месяц.</p>
+            </summary>
+            <div class="card-body">
+              <p class="first-thought">«Наверное, рада»</p>
+              <div class="finding">
+                <span class="tag">Точнее</span>
+                <p><strong>Гордость</strong> — что не бросила на полпути.</p>
+              </div>
+              <div class="finding second">
+                <span class="tag">И ещё</span>
+                <p><strong>Опустошение</strong> — сил радоваться пока нет, будто выжата.</p>
+              </div>
             </div>
-            <div class="finding second">
-              <span class="tag">И ещё</span>
-              <p><strong>Опустошение</strong> — сил радоваться пока нет, будто выжата.</p>
-            </div>
-          </article>
+          </details>
 
-          <article class="emotion-card">
-            <h3>Любовь</h3>
-            <p class="situation">Партнёр молча приготовил чай, пока я допоздна работала.</p>
-            <p class="first-thought">«Приятно»</p>
-            <div class="finding">
-              <span class="tag">Точнее</span>
-              <p><strong>Забота</strong> — замеченная именно в мелочи.</p>
+          <details class="emotion-card">
+            <summary>
+              <h3>Любовь</h3>
+              <p class="situation">Партнёр молча приготовил чай, пока я допоздна работала.</p>
+            </summary>
+            <div class="card-body">
+              <p class="first-thought">«Приятно»</p>
+              <div class="finding">
+                <span class="tag">Точнее</span>
+                <p><strong>Забота</strong> — замеченная именно в мелочи.</p>
+              </div>
+              <div class="finding second">
+                <span class="tag">И ещё</span>
+                <p><strong>Вина</strong> — что сама в последнее время была раздражённой.</p>
+              </div>
             </div>
-            <div class="finding second">
-              <span class="tag">И ещё</span>
-              <p><strong>Вина</strong> — что сама в последнее время была раздражённой.</p>
-            </div>
-          </article>
+          </details>
         </div>
       </section>
     </main>
