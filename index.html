@@ -1,7 +1,7 @@
-<title>Атлас эмоций</title>
+<title>Карта эмоций</title>
 <meta name="description" content="Два колеса эмоций для быстрого поиска точного слова — с пояснением, как ими пользоваться." />
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,380;0,9..144,500;0,9..144,600;1,9..144,450&family=Manrope:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Manrope:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap');
 
   :root{
     --bg: #EFEADD;
@@ -16,7 +16,7 @@
     --line-strong: #C9BC9C;
     --shadow: 226 30% 20%;
 
-    --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+    --font-display: 'Unbounded', 'Segoe UI', sans-serif;
     --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
 
@@ -60,7 +60,7 @@
   }
   .wrap{ max-width: 980px; margin: 0 auto; }
 
-  h1,h2,h3{ font-family: var(--font-display); font-weight: 600; text-wrap: balance; margin: 0; }
+  h1,h2,h3{ font-family: var(--font-display); font-weight: 600; text-wrap: balance; margin: 0; line-height: 1.15; }
 
   .kicker{
     font-family: var(--font-body);
@@ -69,28 +69,76 @@
     letter-spacing: .14em;
     text-transform: uppercase;
     color: var(--accent-strong);
-    margin: 0 0 10px;
+    margin: 0 0 12px;
   }
   header.hero{
     padding-bottom: clamp(28px, 5vw, 40px);
     border-bottom: 1px solid var(--line);
     margin-bottom: clamp(32px, 6vw, 48px);
   }
-  h1{ font-size: clamp(34px, 6vw, 52px); letter-spacing: -.01em; }
+  h1{ font-size: clamp(30px, 5.4vw, 46px); font-weight: 700; }
   .sub{
-    margin: 16px 0 0;
+    margin: 18px 0 0;
     max-width: 62ch;
     font-size: 17px;
     color: var(--ink-soft);
   }
   .sub em{ font-style: italic; color: var(--ink); }
 
-  section{ margin-bottom: clamp(40px, 7vw, 64px); }
-  .section-head{ display:flex; align-items:baseline; gap: 14px; margin-bottom: 20px; }
-  .section-head h2{ font-size: clamp(21px, 3vw, 26px); }
+  section{ margin-bottom: 0; scroll-margin-top: 84px; }
+  .section-head{ display:flex; align-items:baseline; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
+  .section-head h2{ font-size: clamp(19px, 2.6vw, 24px); }
   .section-head .n{
-    font-family: var(--font-display); font-style: italic;
-    color: var(--ink-faint); font-size: 15px;
+    font-family: var(--font-body); font-style: italic;
+    color: var(--ink-faint); font-size: 14.5px;
+  }
+
+  /* ---- layout: side nav + content ---- */
+  .layout{
+    display: grid;
+    grid-template-columns: 176px minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 48px);
+    align-items: start;
+    margin-bottom: clamp(40px, 7vw, 64px);
+  }
+  .side-nav{
+    position: sticky; top: 20px;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .nav-link{
+    font-family: var(--font-body); font-weight: 600; font-size: 13.5px;
+    color: var(--ink-soft); text-decoration: none;
+    padding: 9px 12px; border-radius: 8px;
+    border-left: 2px solid transparent;
+  }
+  .nav-link:hover{ color: var(--ink); background: var(--surface-2); }
+  .nav-link.active{
+    color: var(--accent-strong); background: var(--surface);
+    border-left-color: var(--accent); font-weight: 700;
+  }
+  .content{
+    display: flex; flex-direction: column;
+    gap: clamp(40px, 7vw, 64px);
+    min-width: 0;
+  }
+
+  @media (max-width: 760px){
+    .layout{ grid-template-columns: 1fr; }
+    .side-nav{
+      position: sticky; top: 0; z-index: 20;
+      flex-direction: row; gap: 8px;
+      overflow-x: auto; scrollbar-width: none;
+      background: var(--bg);
+      padding: 12px 20px; margin: 0 -20px;
+      border-bottom: 1px solid var(--line);
+    }
+    .side-nav::-webkit-scrollbar{ display: none; }
+    .nav-link{
+      border-left: none; border: 1px solid var(--line-strong);
+      border-radius: 20px; background: var(--surface);
+      white-space: nowrap; flex: none;
+    }
+    .nav-link.active{ border-color: var(--accent); background: var(--surface); }
   }
 
   /* ---- plates ---- */
@@ -127,8 +175,9 @@
     content: attr(data-plate);
     position: absolute;
     top: 10px; left: 14px;
-    font-family: var(--font-display); font-style: italic;
-    font-size: 13px; color: var(--ink-faint);
+    font-family: var(--font-body); font-weight: 700;
+    letter-spacing: .04em; text-transform: uppercase;
+    font-size: 11px; color: var(--ink-faint);
   }
   .plate-open{
     position: absolute; top: 10px; right: 12px;
@@ -170,8 +219,8 @@
   }
   .steps li::before{
     content: counter(step);
-    font-family: var(--font-display); font-style: italic;
-    font-size: 26px; color: var(--accent-strong);
+    font-family: var(--font-display); font-weight: 800;
+    font-size: 22px; color: var(--accent-strong);
     display:block; margin-bottom: 4px;
   }
   .steps li p{ margin: 0; font-size: 14.5px; color: var(--ink-soft); }
@@ -201,8 +250,8 @@
     width: 11px; height: 11px; left: -32px;
   }
   .scenario li.answer p{
-    font-family: var(--font-display); font-style: italic;
-    color: var(--ink); font-size: 18px;
+    font-family: var(--font-display); font-weight: 700;
+    color: var(--ink); font-size: 16px;
   }
 
   footer{
@@ -235,6 +284,7 @@
   :focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
 
   @media (prefers-reduced-motion: no-preference){
+    html{ scroll-behavior: smooth; }
     .plate-frame img{ transition: transform .2s ease; }
     .plate-frame img:hover{ transform: scale(1.015); }
   }
@@ -243,82 +293,92 @@
 <div class="wrap">
 
   <header class="hero">
-    <p class="kicker">Шпаргалка · словарь чувств</p>
-    <h1>Атлас эмоций</h1>
+    <p class="kicker">Шпаргалка на каждый день</p>
+    <h1>Карта эмоций</h1>
     <p class="sub">Два колеса, чтобы быстрее находить <em>точное</em> слово для того, что происходит внутри — своего или клиента. Нажмите на любое колесо, чтобы открыть его крупно.</p>
   </header>
 
-  <section class="plates" aria-label="Колёса эмоций">
-    <article class="plate">
-      <div class="plate-frame" data-plate="Willcox, пер. Т. Шувалова">
-        <button class="plate-open" data-open="feeling">Открыть</button>
-        <img src="images/feeling-wheel.jpg" alt="Колесо чувств: шесть базовых чувств в центре, от которых расходятся два кольца более конкретных оттенков" data-open="feeling" />
-      </div>
-      <div class="plate-body">
-        <h3>Колесо чувств</h3>
-        <p class="who">Junto Institute, по методу Глории Уилкокс</p>
-        <p>Шесть базовых чувств в центре — точка входа. От каждого расходятся два кольца ко всё более конкретным оттенкам: от «грусть» через «опустошённость» к «беспомощности».</p>
-        <div class="rings">
-          <span>центр — базовое чувство</span>
-          <span>2 кольцо — оттенок</span>
-          <span>3 кольцо — конкретика</span>
-        </div>
-      </div>
-    </article>
+  <div class="layout">
+    <nav class="side-nav" aria-label="Разделы">
+      <a href="#wheels" class="nav-link active">Колесо чувств</a>
+      <a href="#howto" class="nav-link">Как искать</a>
+      <a href="#example" class="nav-link">Пример</a>
+    </nav>
 
-    <article class="plate">
-      <div class="plate-frame" data-plate="Плутчик, 1980">
-        <button class="plate-open" data-open="plutchik">Открыть</button>
-        <img src="images/plutchik.webp" alt="Колесо эмоций Плутчика: восемь базовых эмоций-лепестков с тремя уровнями интенсивности каждая" data-open="plutchik" />
-      </div>
-      <div class="plate-body">
-        <h3>Колесо Плутчика</h3>
-        <p class="who">психолог Роберт Плутчик</p>
-        <p>Восемь базовых эмоций растут попарно противоположными лепестками: радость ↔ грусть, доверие ↔ отвращение, страх ↔ гнев, удивление ↔ ожидание. Между лепестками — эмоции-сплавы: гордость, любовь, разочарование.</p>
-        <div class="rings">
-          <span>центр — сильнее</span>
-          <span>край — слабее</span>
-          <span>между лепестков — сплавы</span>
-        </div>
-      </div>
-    </article>
-  </section>
+    <main class="content">
+      <section id="wheels" class="plates" aria-label="Колёса эмоций">
+        <article class="plate">
+          <div class="plate-frame" data-plate="Willcox, пер. Т. Шувалова">
+            <button class="plate-open" data-open="feeling">Открыть</button>
+            <img src="images/feeling-wheel.jpg" alt="Колесо чувств: шесть базовых чувств в центре, от которых расходятся два кольца более конкретных оттенков" data-open="feeling" />
+          </div>
+          <div class="plate-body">
+            <h3>Колесо чувств</h3>
+            <p class="who">Junto Institute, по методу Глории Уилкокс</p>
+            <p>Шесть базовых чувств в центре — точка входа. От каждого расходятся два кольца ко всё более конкретным оттенкам: от «грусть» через «опустошённость» к «беспомощности».</p>
+            <div class="rings">
+              <span>центр — базовое чувство</span>
+              <span>2 кольцо — оттенок</span>
+              <span>3 кольцо — конкретика</span>
+            </div>
+          </div>
+        </article>
 
-  <section aria-label="Как пользоваться">
-    <div class="section-head"><h2>Как искать</h2></div>
-    <ol class="steps">
-      <li><p><strong>Начните с тела.</strong> Что физически ощущается: сжатие, тепло, тяжесть, дрожь?</p></li>
-      <li><p><strong>Возьмите широкое слово.</strong> Похоже на злость, грусть, страх, радость, удивление или отвращение?</p></li>
-      <li><p><strong>Идите к краю кольца.</strong> Двигайтесь от центра наружу, пока слово не станет точным.</p></li>
-      <li><p><strong>Назовите вслух или запишите.</strong> Точное слово само по себе снижает накал.</p></li>
-    </ol>
-  </section>
+        <article class="plate">
+          <div class="plate-frame" data-plate="Плутчик, 1980">
+            <button class="plate-open" data-open="plutchik">Открыть</button>
+            <img src="images/plutchik.webp" alt="Колесо эмоций Плутчика: восемь базовых эмоций-лепестков с тремя уровнями интенсивности каждая" data-open="plutchik" />
+          </div>
+          <div class="plate-body">
+            <h3>Колесо Плутчика</h3>
+            <p class="who">психолог Роберт Плутчик</p>
+            <p>Восемь базовых эмоций растут попарно противоположными лепестками: радость ↔ грусть, доверие ↔ отвращение, страх ↔ гнев, удивление ↔ ожидание. Между лепестками — эмоции-сплавы: гордость, любовь, разочарование.</p>
+            <div class="rings">
+              <span>центр — сильнее</span>
+              <span>край — слабее</span>
+              <span>между лепестков — сплавы</span>
+            </div>
+          </div>
+        </article>
+      </section>
 
-  <section aria-label="Пример поиска">
-    <div class="section-head"><h2>Пример</h2><span class="n">как это выглядит на практике</span></div>
-    <ol class="scenario">
-      <li>
-        <span class="tag">Ситуация</span>
-        <p>Поссорился с другом, до сих пор трясёт.</p>
-      </li>
-      <li>
-        <span class="tag">Первая мысль</span>
-        <p>«Чувствую... злость?»</p>
-      </li>
-      <li>
-        <span class="tag">Иду по ветке «Злость»</span>
-        <p>Рядом — раздражение, возмущение, ревность. Похоже, но что-то не сходится.</p>
-      </li>
-      <li>
-        <span class="tag">Проверяю соседнюю ветку</span>
-        <p>Гнев часто прикрывает более уязвимое чувство. Заглядываю в «Грусть» → «Страдание».</p>
-      </li>
-      <li class="answer">
-        <span class="tag">Точное слово</span>
-        <p>Не злость. Обида — что меня не услышали.</p>
-      </li>
-    </ol>
-  </section>
+      <section id="howto" aria-label="Как пользоваться">
+        <div class="section-head"><h2>Как искать</h2></div>
+        <ol class="steps">
+          <li><p><strong>Начните с тела.</strong> Что физически ощущается: сжатие, тепло, тяжесть, дрожь?</p></li>
+          <li><p><strong>Возьмите широкое слово.</strong> Похоже на злость, грусть, страх, радость, удивление или отвращение?</p></li>
+          <li><p><strong>Идите к краю кольца.</strong> Двигайтесь от центра наружу, пока слово не станет точным.</p></li>
+          <li><p><strong>Назовите вслух или запишите.</strong> Точное слово само по себе снижает накал.</p></li>
+        </ol>
+      </section>
+
+      <section id="example" aria-label="Пример поиска">
+        <div class="section-head"><h2>Пример</h2><span class="n">как это выглядит на практике</span></div>
+        <ol class="scenario">
+          <li>
+            <span class="tag">Ситуация</span>
+            <p>Поссорился с другом, до сих пор трясёт.</p>
+          </li>
+          <li>
+            <span class="tag">Первая мысль</span>
+            <p>«Чувствую... злость?»</p>
+          </li>
+          <li>
+            <span class="tag">Иду по ветке «Злость»</span>
+            <p>Рядом — раздражение, возмущение, ревность. Похоже, но что-то не сходится.</p>
+          </li>
+          <li>
+            <span class="tag">Проверяю соседнюю ветку</span>
+            <p>Гнев часто прикрывает более уязвимое чувство. Заглядываю в «Грусть» → «Страдание».</p>
+          </li>
+          <li class="answer">
+            <span class="tag">Точное слово</span>
+            <p>Не злость. Обида — что меня не услышали.</p>
+          </li>
+        </ol>
+      </section>
+    </main>
+  </div>
 
   <footer>
     <p>Колесо чувств — русский перевод Тани Шуваловой, Junto Institute for Entrepreneurial Leadership. Эмоция — сигнал, а не диагноз.</p>
@@ -363,4 +423,18 @@
   document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && !lightbox.hidden) closeLightbox(); });
+
+  const navLinks = document.querySelectorAll('.nav-link');
+  const navSections = ['wheels', 'howto', 'example']
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(!entry.isIntersecting) return;
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id));
+    });
+  }, { rootMargin: '-35% 0px -55% 0px' });
+
+  navSections.forEach(s => spy.observe(s));
 </script>
