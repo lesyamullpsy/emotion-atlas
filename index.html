@@ -300,6 +300,26 @@
     color: var(--ink); font-size: 16px;
   }
 
+  /* ---- algorithm (что делать, если сильно) ---- */
+  .algorithm{
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column; gap: 16px;
+    max-width: 62ch;
+  }
+  .algorithm li{ display: flex; gap: 16px; align-items: flex-start; }
+  .algorithm .num{
+    flex: none; width: 30px;
+    font-family: var(--font-display); font-weight: 800;
+    font-size: 21px; color: var(--accent-strong); line-height: 1.3;
+  }
+  .algorithm p{ margin: 0; font-size: 15px; color: var(--ink-soft); }
+  .algorithm strong{ color: var(--ink); font-weight: 700; }
+  .algorithm-note{
+    margin: 4px 0 0; padding: 14px 16px;
+    background: var(--quote-bg); border-radius: 8px;
+    font-size: 13.5px; color: var(--ink-soft); max-width: 62ch;
+  }
+
   /* ---- emotion cards (карта примеров) ---- */
   .emotion-cards{
     display: grid;
@@ -363,15 +383,14 @@
     font-size: 17px; color: var(--ink);
   }
   .author-role{ margin: 0; font-size: 13px; color: var(--ink-faint); }
-  .author-ig{
-    margin-top: 5px; display: inline-flex; align-items: center; gap: 6px;
+  .author-links{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
+  .author-badge{
+    display: inline-flex; align-items: center; gap: 6px;
     font-family: var(--font-body); font-weight: 700; font-size: 13px;
     color: var(--bg); background: var(--accent-strong);
     padding: 7px 14px; border-radius: 20px; text-decoration: none;
   }
-  .author-ig:hover{ background: var(--accent); }
-  .author-cta{ margin: 6px 0 0; font-size: 13px; color: var(--ink-soft); }
-  .author-cta a{ font-weight: 700; }
+  .author-badge:hover{ background: var(--accent); }
   .credit{ margin: 0; max-width: 40ch; font-size: 12.5px; color: var(--ink-faint); }
 
   /* ---- lightbox ---- */
@@ -419,6 +438,7 @@
     <nav class="side-nav" aria-label="Разделы">
       <a href="#wheels" class="nav-link active">Колесо чувств</a>
       <a href="#howto" class="nav-link">Как искать внутри</a>
+      <a href="#sos" class="nav-link">Если тяжело</a>
       <a href="#example" class="nav-link">Пример</a>
       <a href="#map" class="nav-link">Карта ситуаций</a>
     </nav>
@@ -471,6 +491,33 @@
           <li class="arrow" aria-hidden="true"></li>
           <li class="step"><p><strong>Назовите вслух или запишите.</strong> Точное слово само по себе снижает накал.</p></li>
         </ol>
+      </section>
+
+      <section id="sos" aria-label="Что делать, если чувство слишком сильное">
+        <div class="section-head"><h2>Что делать, если чувство слишком сильное</h2></div>
+        <ol class="algorithm">
+          <li>
+            <span class="num">1</span>
+            <p><strong>Назови.</strong> «Это [найденная эмоция]. И это нормально» — лучше вслух: мысленная жвачка не помогает полностью прожить.</p>
+          </li>
+          <li>
+            <span class="num">2</span>
+            <p><strong>Заземлись.</strong> 3 глубоких вдоха, ноги на полу, оглядись — назови 5 предметов вокруг.</p>
+          </li>
+          <li>
+            <span class="num">3</span>
+            <p><strong>Дай времени пройти.</strong> Пик эмоциональной волны длится около 90 секунд — не гони и не подавляй, просто досиди.</p>
+          </li>
+          <li>
+            <span class="num">4</span>
+            <p><strong>Спроси, что она хочет сказать.</strong> Какая потребность стоит за этим чувством — в безопасности, в признании, в отдыхе?</p>
+          </li>
+          <li>
+            <span class="num">5</span>
+            <p><strong>Выбери маленький шаг.</strong> Не решать всё сразу — просто одно конкретное действие сейчас.</p>
+          </li>
+        </ol>
+        <p class="algorithm-note">Если накрывает слишком часто или отпускает с трудом — это повод обратиться за поддержкой, а не сигнал, что что-то с тобой не так.</p>
       </section>
 
       <section id="example" aria-label="Пример поиска">
@@ -694,8 +741,10 @@
     <div class="author">
       <p class="author-name">Леся</p>
       <p class="author-role">психолог и коуч</p>
-      <a class="author-ig" href="https://instagram.com/les_vyshe" target="_blank" rel="noopener">Instagram: @les_vyshe</a>
-      <p class="author-cta">Записаться — в сообщения <a href="https://t.me/LMRpsy" target="_blank" rel="noopener">Telegram</a></p>
+      <div class="author-links">
+        <a class="author-badge" href="https://instagram.com/les_vyshe" target="_blank" rel="noopener">Instagram: @les_vyshe</a>
+        <a class="author-badge" href="https://t.me/LMRpsy" target="_blank" rel="noopener">Записаться в Telegram</a>
+      </div>
     </div>
     <p class="credit">Колесо чувств — русский перевод Тани Шуваловой, Junto Institute for Entrepreneurial Leadership. Эмоция — сигнал, а не диагноз.</p>
   </footer>
@@ -740,7 +789,7 @@
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && !lightbox.hidden) closeLightbox(); });
 
   const navLinks = document.querySelectorAll('.nav-link');
-  const navSections = ['wheels', 'howto', 'example', 'map']
+  const navSections = ['wheels', 'howto', 'sos', 'example', 'map']
     .map(id => document.getElementById(id))
     .filter(Boolean);
 
