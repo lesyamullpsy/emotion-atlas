@@ -438,9 +438,9 @@
     <nav class="side-nav" aria-label="Разделы">
       <a href="#wheels" class="nav-link active">Колесо чувств</a>
       <a href="#howto" class="nav-link">Как искать внутри</a>
-      <a href="#sos" class="nav-link">Если тяжело</a>
       <a href="#example" class="nav-link">Пример</a>
       <a href="#map" class="nav-link">Карта ситуаций</a>
+      <a href="#sos" class="nav-link">Алгоритм работы</a>
     </nav>
 
     <main class="content">
@@ -491,33 +491,6 @@
           <li class="arrow" aria-hidden="true"></li>
           <li class="step"><p><strong>Назовите вслух или запишите.</strong> Точное слово само по себе снижает накал.</p></li>
         </ol>
-      </section>
-
-      <section id="sos" aria-label="Что делать, если чувство слишком сильное">
-        <div class="section-head"><h2>Что делать, если чувство слишком сильное</h2></div>
-        <ol class="algorithm">
-          <li>
-            <span class="num">1</span>
-            <p><strong>Назови.</strong> «Это [найденная эмоция]. И это нормально» — лучше вслух: мысленная жвачка не помогает полностью прожить.</p>
-          </li>
-          <li>
-            <span class="num">2</span>
-            <p><strong>Заземлись.</strong> 3 глубоких вдоха, ноги на полу, оглядись — назови 5 предметов вокруг.</p>
-          </li>
-          <li>
-            <span class="num">3</span>
-            <p><strong>Дай времени пройти.</strong> Пик эмоциональной волны длится около 90 секунд — не гони и не подавляй, просто досиди.</p>
-          </li>
-          <li>
-            <span class="num">4</span>
-            <p><strong>Спроси, что она хочет сказать.</strong> Какая потребность стоит за этим чувством — в безопасности, в признании, в отдыхе?</p>
-          </li>
-          <li>
-            <span class="num">5</span>
-            <p><strong>Выбери маленький шаг.</strong> Не решать всё сразу — просто одно конкретное действие сейчас.</p>
-          </li>
-        </ol>
-        <p class="algorithm-note">Если накрывает слишком часто или отпускает с трудом — это повод обратиться за поддержкой, а не сигнал, что что-то с тобой не так.</p>
       </section>
 
       <section id="example" aria-label="Пример поиска">
@@ -730,6 +703,33 @@
           </details>
         </div>
       </section>
+
+      <section id="sos" aria-label="Что делать, если чувство слишком сильное">
+        <div class="section-head"><h2>Что делать, если чувство слишком сильное</h2></div>
+        <ol class="algorithm">
+          <li>
+            <span class="num">1</span>
+            <p><strong>Назови.</strong> «Это [найденная эмоция]. И это нормально» — лучше вслух: мысленная жвачка не помогает полностью прожить.</p>
+          </li>
+          <li>
+            <span class="num">2</span>
+            <p><strong>Заземлись.</strong> 3 глубоких вдоха, ноги на полу, оглядись — назови 5 предметов вокруг.</p>
+          </li>
+          <li>
+            <span class="num">3</span>
+            <p><strong>Дай времени пройти.</strong> Пик эмоциональной волны длится около 90 секунд — не гони и не подавляй, просто досиди.</p>
+          </li>
+          <li>
+            <span class="num">4</span>
+            <p><strong>Спроси, что она хочет сказать.</strong> Какая потребность стоит за этим чувством — в безопасности, в признании, в отдыхе?</p>
+          </li>
+          <li>
+            <span class="num">5</span>
+            <p><strong>Выбери маленький шаг.</strong> Не решать всё сразу — просто одно конкретное действие сейчас.</p>
+          </li>
+        </ol>
+        <p class="algorithm-note">Если накрывает слишком часто или отпускает с трудом — это повод обратиться за поддержкой, а не сигнал, что что-то с тобой не так.</p>
+      </section>
     </main>
   </div>
 
@@ -789,7 +789,7 @@
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && !lightbox.hidden) closeLightbox(); });
 
   const navLinks = document.querySelectorAll('.nav-link');
-  const navSections = ['wheels', 'howto', 'sos', 'example', 'map']
+  const navSections = ['wheels', 'howto', 'example', 'map', 'sos']
     .map(id => document.getElementById(id))
     .filter(Boolean);
 
