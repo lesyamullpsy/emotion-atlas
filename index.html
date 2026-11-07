@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
 <title>Карта эмоций</title>
-<meta name="description" content="Два колеса эмоций для быстрого поиска точного слова — с пояснением, как ими пользоваться." />
+<meta name="description" content="Два колеса эмоций для быстрого поиска точного слова, пояснение, как ими пользоваться, и страница дневника дня для скачивания в PDF или PNG." />
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Manrope:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Lora:ital,wght@0,400;1,400&display=swap');
 
   :root{
     --bg: #EFEADD;
@@ -393,6 +394,88 @@
   .author-badge:hover{ background: var(--accent); }
   .credit{ margin: 0; max-width: 40ch; font-size: 12.5px; color: var(--ink-faint); }
 
+  /* ---- diary (страница дня) ---- */
+  .diary{
+    display: grid;
+    grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 40px);
+    align-items: start;
+  }
+  @media (max-width: 720px){ .diary{ grid-template-columns: minmax(0, 1fr); } }
+
+  .sheet-frame{
+    --s: .5;
+    position: relative; overflow: hidden;
+    width: 100%; max-width: 420px;
+    height: calc(1123px * var(--s));
+    box-shadow: 0 0 0 1px var(--line-strong), 0 14px 30px -14px hsl(var(--shadow) / .4);
+  }
+  .sheet-frame .sheet{
+    position: absolute; top: 0; left: 0;
+    transform: scale(var(--s)); transform-origin: top left;
+  }
+
+  .diary-info{ display: flex; flex-direction: column; gap: 18px; max-width: 46ch; }
+  .diary-info p{ margin: 0; font-size: 15px; color: var(--ink-soft); }
+  .diary-info strong{ color: var(--ink); font-weight: 700; }
+  .diary-tips{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .diary-tips li{ font-size: 14.5px; color: var(--ink-soft); padding-left: 16px; position: relative; }
+  .diary-tips li::before{
+    content: ''; position: absolute; left: 0; top: .6em;
+    width: 7px; height: 7px; border-radius: 50%; background: var(--line-strong);
+  }
+  .diary-tips strong{ color: var(--ink); font-weight: 700; }
+  .diary-toggle{ display: flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; font-size: 14.5px; color: var(--ink); }
+  .diary-toggle input{ width: 20px; height: 20px; margin: 0; accent-color: var(--accent-strong); cursor: pointer; }
+  .diary-actions{ display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn{
+    font-family: var(--font-body); font-weight: 700; font-size: 14px;
+    min-height: 44px; padding: 0 22px; border-radius: 22px; cursor: pointer;
+    border: 1.5px solid var(--accent-strong);
+  }
+  .btn-primary{ background: var(--accent-strong); color: var(--bg); }
+  .btn-primary:hover{ background: var(--accent); border-color: var(--accent); }
+  .btn-ghost{ background: transparent; color: var(--accent-strong); }
+  .btn-ghost:hover{ background: var(--surface); }
+  .btn:disabled{ opacity: .55; cursor: default; }
+  .diary-status{ margin: 0; min-height: 1.4em; font-size: 13.5px; color: var(--ink-faint); }
+
+  /* сам лист: бумага, поэтому цвета не зависят от темы */
+  .sheet{
+    --paper: #FBF7F0; --s-accent: #55684F; --s-ink: #2E2A26;
+    --s-muted: #6E655C; --s-line: #8C8278; --s-label: #4A433D;
+    width: 794px; height: 1123px; box-sizing: border-box;
+    padding: 56px 64px; background: var(--paper); color: var(--s-ink);
+    font-family: 'Lora', Georgia, serif; font-size: 16px; line-height: normal;
+    display: flex; flex-direction: column; gap: 30px;
+  }
+  .sheet.plain{ --paper: #FFFFFF; }
+  .sheet *{ box-sizing: border-box; }
+  .sh-head{ display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid var(--s-ink); padding-bottom: 14px; }
+  .sheet .sh-title{ margin: 0; font-family: 'Caveat', 'Segoe Print', cursive; font-weight: 700; font-size: 52px; line-height: 1; color: var(--s-accent); }
+  .sh-meta{ display: flex; gap: 22px; align-items: flex-end; }
+  .sh-field{ display: flex; flex-direction: column; gap: 4px; }
+  .sh-label{ font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--s-muted); }
+  .sh-blank{ border-bottom: 1px solid var(--s-line); height: 22px; }
+  .sh-block{ display: flex; flex-direction: column; gap: 14px; }
+  .sh-grow{ flex: 1; }
+  .sheet .sh-h2{ margin: 0; font-family: 'Caveat', 'Segoe Print', cursive; font-weight: 700; font-size: 32px; line-height: 1; color: var(--s-ink); }
+  .sh-lines{ display: flex; flex-direction: column; }
+  .sh-lines .sh-h2{ margin-bottom: 4px; }
+  .sh-rule{ border-bottom: 1px solid var(--s-line); height: 30px; }
+  .sh-scale{ display: flex; justify-content: space-between; align-items: flex-start; }
+  .sh-dot{ display: flex; flex-direction: column; align-items: center; gap: 5px; width: 58px; }
+  .sh-dot b{ width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--s-ink); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 400; }
+  .sh-dot i{ font-size: 10px; color: var(--s-muted); text-align: center; line-height: 1.2; }
+  .sh-inline{ display: flex; align-items: flex-end; gap: 10px; font-size: 14px; }
+  .sh-inline span{ white-space: nowrap; color: var(--s-label); }
+  .sh-inline.accent span{ color: var(--s-accent); font-style: italic; }
+  .sh-fill{ flex: 1; border-bottom: 1px solid var(--s-line); height: 20px; }
+  .sh-inline.accent .sh-fill{ height: 26px; }
+  .sh-after{ margin-top: 14px; }
+  .sh-cols{ display: grid; grid-template-columns: 1fr 1.6fr 1fr; column-gap: 18px; }
+  .sh-cols.head{ font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--s-muted); }
+
   /* ---- lightbox ---- */
   .lightbox{
     position: fixed; inset: 0; background: hsl(var(--shadow) / .82);
@@ -441,6 +524,7 @@
       <a href="#example" class="nav-link">Пример</a>
       <a href="#map" class="nav-link">Карта ситуаций</a>
       <a href="#sos" class="nav-link">Алгоритм работы</a>
+      <a href="#diary" class="nav-link">Дневник</a>
     </nav>
 
     <main class="content">
@@ -730,6 +814,75 @@
         </ol>
         <p class="algorithm-note">Если накрывает слишком часто или отпускает с трудом — это повод обратиться за поддержкой, а не сигнал, что что-то с тобой не так.</p>
       </section>
+      <section id="diary" aria-label="Дневник дня">
+        <div class="section-head"><h2>Дневник дня</h2><span class="n">бланк на одну страницу, A4</span></div>
+        <div class="diary">
+          <div class="sheet-frame" id="sheetFrame" role="img" aria-label="Предпросмотр страницы дневника: настроение, события, чувства, мысли">
+            <div class="sheet" id="diarySheet" aria-hidden="true">
+              <div class="sh-head">
+                <h3 class="sh-title">Мой день</h3>
+                <div class="sh-meta">
+                  <div class="sh-field"><span class="sh-label">Дата</span><div class="sh-blank" style="width:150px"></div></div>
+                  <div class="sh-field"><span class="sh-label">День недели</span><div class="sh-blank" style="width:130px"></div></div>
+                </div>
+              </div>
+
+              <div class="sh-block">
+                <h4 class="sh-h2">Настроение</h4>
+                <div class="sh-scale">
+                  <div class="sh-dot"><b>1</b><i>очень плохо</i></div>
+                  <div class="sh-dot"><b>2</b></div>
+                  <div class="sh-dot"><b>3</b></div>
+                  <div class="sh-dot"><b>4</b></div>
+                  <div class="sh-dot"><b>5</b><i>так себе</i></div>
+                  <div class="sh-dot"><b>6</b></div>
+                  <div class="sh-dot"><b>7</b></div>
+                  <div class="sh-dot"><b>8</b></div>
+                  <div class="sh-dot"><b>9</b></div>
+                  <div class="sh-dot"><b>10</b><i>отлично</i></div>
+                </div>
+                <div class="sh-inline"><span>Почему именно так:</span><div class="sh-fill"></div></div>
+              </div>
+
+              <div class="sh-lines">
+                <h4 class="sh-h2">События</h4>
+                <div class="sh-rule"></div><div class="sh-rule"></div><div class="sh-rule"></div>
+                <div class="sh-inline accent sh-after"><span>Самый яркий момент:</span><div class="sh-fill"></div></div>
+              </div>
+
+              <div class="sh-block" style="gap:10px">
+                <h4 class="sh-h2">Чувства</h4>
+                <div class="sh-cols head"><span>Чувство</span><span>Когда / из-за чего</span><span>Где в теле</span></div>
+                <div class="sh-cols">
+                  <div class="sh-rule"></div><div class="sh-rule"></div><div class="sh-rule"></div>
+                  <div class="sh-rule"></div><div class="sh-rule"></div><div class="sh-rule"></div>
+                  <div class="sh-rule"></div><div class="sh-rule"></div><div class="sh-rule"></div>
+                </div>
+              </div>
+
+              <div class="sh-lines sh-grow">
+                <h4 class="sh-h2">Мысли</h4>
+                <div class="sh-rule"></div><div class="sh-rule"></div><div class="sh-rule"></div><div class="sh-rule"></div><div class="sh-rule"></div>
+                <div class="sh-inline accent sh-after"><span>Беру с собой в завтра:</span><div class="sh-fill"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="diary-info">
+            <p>Страница на один день: <strong>настроение, события, чувства, мысли</strong>. Скачай, распечатай и заполни от руки.</p>
+            <ul class="diary-tips">
+              <li>В колонку <strong>«Чувство»</strong> впиши слово, которое нашла на колёсах выше.</li>
+              <li>В колонку <strong>«Где в теле»</strong> запиши то, что заметила в первом шаге раздела «Как искать внутри».</li>
+            </ul>
+            <label class="diary-toggle" for="plainBg"><input type="checkbox" id="plainBg"> Белый фон для печати</label>
+            <div class="diary-actions">
+              <button class="btn btn-primary" id="dlPdf" type="button">Скачать PDF</button>
+              <button class="btn btn-ghost" id="dlPng" type="button">Скачать PNG</button>
+            </div>
+            <p class="diary-status" id="diaryStatus" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
@@ -759,6 +912,8 @@
   </figure>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
   const data = {
     plutchik: { src: 'images/plutchik.webp', caption: 'Колесо эмоций Плутчика' },
@@ -789,7 +944,7 @@
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && !lightbox.hidden) closeLightbox(); });
 
   const navLinks = document.querySelectorAll('.nav-link');
-  const navSections = ['wheels', 'howto', 'example', 'map', 'sos']
+  const navSections = ['wheels', 'howto', 'example', 'map', 'sos', 'diary']
     .map(id => document.getElementById(id))
     .filter(Boolean);
 
@@ -802,5 +957,96 @@
 
   navSections.forEach(s => spy.observe(s));
 </script>
-</body>
-</html>
+
+<script>
+  /* дневник: масштаб предпросмотра и экспорт в PDF / PNG */
+  (function(){
+    const SHEET_W = 794, SHEET_H = 1123;
+    const frame = document.getElementById('sheetFrame');
+    const sheet = document.getElementById('diarySheet');
+    const statusEl = document.getElementById('diaryStatus');
+    const btnPdf = document.getElementById('dlPdf');
+    const btnPng = document.getElementById('dlPng');
+    const plain = document.getElementById('plainBg');
+    const FILE = 'Дневник — страница дня';
+    plain.addEventListener('change', () => sheet.classList.toggle('plain', plain.checked));
+    sheet.classList.toggle('plain', plain.checked);
+
+    function fit(){ frame.style.setProperty('--s', (frame.clientWidth / SHEET_W).toFixed(4)); }
+    fit();
+    if('ResizeObserver' in window){ new ResizeObserver(fit).observe(frame); }
+    else { window.addEventListener('resize', fit); }
+
+    // внутри окна Claude файл отдаёт его собственный механизм, на обычном сайте скачивает сам браузер
+    const downloadsReady = (async () => {
+      try{ return window.claude ? await window.claude.use('downloads') : null; }
+      catch(e){ return null; }
+    })();
+
+    function browserSave(blob, filename){
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    }
+
+    async function renderCanvas(){
+      await Promise.all([
+        document.fonts.load('700 52px Caveat'),
+        document.fonts.load('400 14px Lora'),
+        document.fonts.load('italic 400 14px Lora')
+      ]);
+      await document.fonts.ready;
+      // рисуем копию листа без уменьшения, вне экрана
+      const host = document.createElement('div');
+      host.style.cssText = 'position:fixed;left:-10000px;top:0;width:' + SHEET_W + 'px;height:' + SHEET_H + 'px;pointer-events:none';
+      const clone = sheet.cloneNode(true);
+      clone.removeAttribute('id');
+      host.appendChild(clone);
+      document.body.appendChild(host);
+      try{
+        return await html2canvas(clone, {
+          scale: 3, backgroundColor: plain.checked ? '#FFFFFF' : '#FBF7F0', logging: false,
+          width: SHEET_W, height: SHEET_H, windowWidth: SHEET_W
+        });
+      } finally { host.remove(); }
+    }
+
+    function busy(on, text){
+      btnPdf.disabled = on; btnPng.disabled = on;
+      if(text !== undefined) statusEl.textContent = text;
+    }
+
+    async function exportAs(kind){
+      busy(true, 'Готовлю файл…');
+      try{
+        const dl = await downloadsReady;
+        const canvas = await renderCanvas();
+        let blob, filename;
+        if(kind === 'png'){
+          blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+          filename = FILE + (plain.checked ? ' (белый фон)' : '') + '.png';
+        } else {
+          const pdf = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait', compress: true });
+          pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 210, 297, undefined, 'FAST');
+          blob = pdf.output('blob');
+          filename = FILE + (plain.checked ? ' (белый фон)' : '') + '.pdf';
+        }
+        if(dl){ await dl.save({ filename: filename, data: blob }); }
+        else { browserSave(blob, filename); }
+        busy(false, 'Файл сохранён.');
+      } catch(e){
+        const code = e && e.code;
+        busy(false, code === 'declined' ? 'Сохранение отменено.' : 'Не получилось подготовить файл. Попробуй ещё раз.');
+      }
+    }
+
+    btnPdf.addEventListener('click', () => exportAs('pdf'));
+    btnPng.addEventListener('click', () => exportAs('png'));
+  })();
+</script>
+
+</body></html>
